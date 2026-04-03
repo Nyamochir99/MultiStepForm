@@ -3,7 +3,7 @@ import { Logo } from "./Logo";
 
 export const Header = () => {
   return (
-    <div className="flex flex-col gap-2 ">
+    <div className="h-35.5 flex flex-col gap-2 ">
       <Logo />
       <div className="text-[26px] text-[#202124] font-semibold">
         Join Us! 😎

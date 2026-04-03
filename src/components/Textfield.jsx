@@ -4,11 +4,11 @@ export const Textfield = ({
   error,
   labelName,
   required,
-  type,
+  type = "text",
   onChange,
   placeholder,
   value,
-  onFocus,
+  onBlur,
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -16,14 +16,14 @@ export const Textfield = ({
         {labelName} {required && <span className="text-[#E14942]">*</span>}
       </label>
       <input
-        onFocus={onFocus}
+        onBlur={onBlur}
         className={`w-full p-3 text-[#121316] text-[16px] font-normal rounded-lg border ${error ? "border-[#E14942]" : "border-[#CBD5E1]"}`}
         value={value}
         type={type}
         onChange={onChange}
         placeholder={placeholder}
       />
-      {error && <p className="text-[#E14942] text-[14px] ">{onFocus}</p>}
+      {error && <p className="text-[#E14942] text-[14px] ">{error}</p>}
     </div>
   );
 };
