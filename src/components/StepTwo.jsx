@@ -19,16 +19,12 @@ export const StepTwo = ({
     passwordError: "",
     confirmPasswordError: "",
   });
-  const trimedEmail = form.email;
-  const trimedNumber = form.number;
-  const trimedPassword = form.password;
-  const trimedConfirmPassword = form.confirmPassword;
 
-  const isEmailValid = () => {
-    if (trimedEmail.trim() === "") {
+  const isEmailValid = (email) => {
+    if (email.trim() === "") {
       return setErrors({ ...errors, emailError: "Мэйл хаягаа оруулна уу." });
     } else if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
     ) {
       return setErrors({
         ...errors,
@@ -36,58 +32,55 @@ export const StepTwo = ({
       });
     } else setErrors({ ...errors, emailError: "" });
   };
-  const isNumberValid = () => {
-    if (trimedNumber.trim() === "") {
+  const isNumberValid = (number) => {
+    if (number.trim() === "") {
       return setErrors({
         ...errors,
         numberError: "Утасны дугаараа оруулна уу.",
       });
-    } else if (!/^[0-9]{8}$/.test(form.number)) {
+    } else if (!/^[0-9]{8}$/.test(number)) {
       return setErrors({
         ...errors,
         numberError: "Зөв утасны дугаар оруулна уу.",
       });
     } else setErrors({ ...errors, numberError: "" });
   };
-  const isPasswordValid = () => {
-    if (trimedPassword.trim() === "") {
+  const isPasswordValid = (password) => {
+    if (password.trim() === "") {
       return setErrors({ ...errors, passwordError: "Нууц үг оруулна уу." });
     } else if (
       !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_+=,.?-]).{8,}$/.test(
-        form.password,
+        password,
       )
     ) {
-      return setErrors({
-        ...errors,
-        passwordError:
-          "Нууц үг нь. Том, жижиг үсэг, тоо, тусгай тэмдэгт/!@#$%^&*_+=,.?-/ агуулсан, 8-аас дээш тэмдэгттэй байна.",
-      });
+      const passwordErrors = [];
+
+      if (password.length < 8) passwordErrors.push("- 8-с дээш тэмдэгттэй.");
+      if (!/[A-Z]/.test(password)) passwordErrors.push("- Том үсэг агуулах.");
+      if (!/[a-z]/.test(password)) passwordErrors.push("- Жижиг үсэг агуулах.");
+      if (!/[0-9]/.test(password)) passwordErrors.push("- Тоо агуулах.");
+      if (!/[!@#$%^&*_+=,.?-]/.test(password))
+        passwordErrors.push("- Тусгай тэмдэгт агуулах. ( !@#$%^&*_+=,.?- )");
+      if (passwordErrors.length > 0) {
+        const lastError =
+          "Нууц үг нь дараах шаардлагуудыг хангах ёстой:\n" +
+          passwordErrors.join("\n");
+        return setErrors({ ...errors, passwordError: lastError });
+      }
     } else setErrors({ ...errors, passwordError: "" });
   };
-  const isConfirmPasswordValid = () => {
-    if (trimedConfirmPassword.trim() === "") {
+  const isConfirmPasswordValid = (confirmPassword) => {
+    if (confirmPassword.trim() === "") {
       return setErrors({
         ...errors,
         confirmPasswordError: "Нууц үгээ давтана уу.",
       });
-    } else if (form.confirmPassword !== form.password) {
+    } else if (confirmPassword !== form.password) {
       return setErrors({
         ...errors,
-        confirmPasswordError: "Таны оруулсан нууц үг таарахгүй байна.",
+        confirmPasswordError: "Нууц үг таарахгүй байна.",
       });
     } else setErrors({ ...errors, emailError: "" });
-  };
-  const handleEmailBlur = () => {
-    isEmailValid();
-  };
-  const handleNumberBlur = () => {
-    isNumberValid();
-  };
-  const handlePasswordBlur = () => {
-    isPasswordValid();
-  };
-  const handleConfirmPassworBlur = () => {
-    isConfirmPasswordValid();
   };
   const isHavingErrors = () => {
     let isValid = true;
@@ -97,7 +90,7 @@ export const StepTwo = ({
       passwordError: "",
       confirmPasswordError: "",
     };
-    if (trimedEmail.trim() === "") {
+    if (form.email.trim() === "") {
       newErrors.emailError = "Мэйл хаягаа оруулна уу.";
       isValid = false;
     } else if (
@@ -107,7 +100,7 @@ export const StepTwo = ({
       isValid = false;
     }
 
-    if (trimedNumber.trim() === "") {
+    if (form.number.trim() === "") {
       newErrors.numberError = "Утасны дугаараа оруулна уу.";
       isValid = false;
     } else if (!/^[0-9]{8}$/.test(form.number)) {
@@ -115,7 +108,7 @@ export const StepTwo = ({
       isValid = false;
     }
 
-    if (trimedPassword.trim() === "") {
+    if (form.password.trim() === "") {
       newErrors.passwordError = "Нууц үг оруулна уу.";
       isValid = false;
     } else if (
@@ -127,7 +120,7 @@ export const StepTwo = ({
       isValid = false;
     }
 
-    if (trimedConfirmPassword.trim() === "") {
+    if (form.confirmPassword.trim() === "") {
       newErrors.confirmPasswordError = "Нууц үгээ давтана уу.";
       isValid = false;
     } else if (form.confirmPassword !== form.password) {
@@ -149,11 +142,13 @@ export const StepTwo = ({
             <Textfield
               value={form.email}
               onChange={(e) => {
-                setForm({ ...form, email: e.target.value });
+                const mail = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, email: mail });
+                isEmailValid(mail);
               }}
               type={"text"}
               error={errors.emailError}
-              onBlur={handleEmailBlur}
+              onBlur={() => isEmailValid(form.email)}
               required={true}
               labelName="Email"
               placeholder="Your email"
@@ -161,11 +156,13 @@ export const StepTwo = ({
             <Textfield
               value={form.number}
               onChange={(e) => {
-                setForm({ ...form, number: e.target.value });
+                const num = e.target.value.replace(/\D/g, "");
+                setForm({ ...form, number: num });
+                isNumberValid(num);
               }}
               type={"text"}
               error={errors.numberError}
-              onBlur={handleNumberBlur}
+              onBlur={() => isNumberValid(form.number)}
               required={true}
               labelName="Phone number"
               placeholder="Your phone number"
@@ -173,11 +170,13 @@ export const StepTwo = ({
             <Textfield
               value={form.password}
               onChange={(e) => {
-                setForm({ ...form, password: e.target.value });
+                const pass = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, password: pass });
+                isPasswordValid(pass);
               }}
               type={"password"}
               error={errors.passwordError}
-              onBlur={handlePasswordBlur}
+              onBlur={() => isPasswordValid(form.password)}
               required={true}
               labelName="Password"
               placeholder="Your password"
@@ -185,11 +184,13 @@ export const StepTwo = ({
             <Textfield
               value={form.confirmPassword}
               onChange={(e) => {
-                setForm({ ...form, confirmPassword: e.target.value });
+                const confirmPass = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, confirmPassword: confirmPass });
+                isConfirmPasswordValid(confirmPass);
               }}
               type={"password"}
               error={errors.confirmPasswordError}
-              onBlur={handleConfirmPassworBlur}
+              onBlur={() => isConfirmPasswordValid(form.confirmPassword)}
               required={true}
               labelName="Confirm password"
               placeholder="Confirm password"

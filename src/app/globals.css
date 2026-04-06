@@ -3,3 +3,6 @@
 body {
   background-color: #f4f4f4;
 }
+pre {
+  font-family: sans-serif;
+}

@@ -39,17 +39,14 @@ export const StepThreee = ({
     // }
   };
   const isImagevalid = () => {
-    if (form.image === "")
+    if (form.image === "") {
       return setErrors({
         ...errors,
         imageError: "Профайл зурагаа оруулна уу.",
       });
-  };
-  const handleDateBlur = () => {
-    isDateValid();
-  };
-  const handleImageBlur = () => {
-    isImagevalid();
+    } else {
+      return setErrors({ ...errors, imageError: "" });
+    }
   };
   const isHavingErrors = () => {
     let isValid = true;
@@ -80,24 +77,26 @@ export const StepThreee = ({
               value={form.date}
               onChange={(e) => {
                 setForm({ ...form, date: e.target.value });
+                isDateValid(e.target.value);
               }}
               type={"date"}
               error={errors.dateError}
-              onBlur={handleDateBlur}
+              onBlur={() => isDateValid(form.date)}
               required={true}
               labelName="Date of birth"
-              placeholder="mm/dd/yyyy"
             />
             <Imagefield
               value={form.image}
               onChange={(e) => {
                 const imageValue = URL.createObjectURL(e.target.files[0]);
-                setForm({ ...form, image: imageValue });
+                setForm((prev) => ({ ...prev, image: imageValue }));
+                isImagevalid(e.target.files[0]);
               }}
               onCancel={() => {
                 setForm({ ...form, image: "" });
+                isImagevalid(form.image);
               }}
-              onBlur={handleImageBlur}
+              onBlur={() => isImagevalid(form.image)}
               error={errors.imageError}
               required={true}
               labelName="Profile image"

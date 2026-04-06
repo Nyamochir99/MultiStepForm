@@ -17,51 +17,38 @@ export const StepOne = ({
     lastnameError: "",
     usernameError: "",
   });
-  const trimedFirstname = form.firstname;
-  const trimedLastname = form.lastname;
-  const trimedUsername = form.username;
-
-  const isFirstNameValid = () => {
-    if (trimedFirstname.trim() === "") {
+  const isFirstNameValid = (firstname) => {
+    if (firstname.trim() === "") {
       return setErrors({ ...errors, firstnameError: "Нэрээ оруулна уу." });
-    } else if (!/^[A-Za-z-]+$/.test(form.firstname)) {
+    } else if (!/^[A-Za-z-]+$/.test(firstname)) {
       return setErrors({
         ...errors,
         firstnameError: "Нэр нь тоо болон тэмдэгт агуулж болохгүй.",
       });
     } else setErrors({ ...errors, firstnameError: "" });
   };
-  const isLastNameValid = () => {
-    if (trimedLastname.trim() === "") {
+  const isLastNameValid = (lastname) => {
+    if (lastname.trim() === "") {
       return setErrors({ ...errors, lastnameError: "Овгоо оруулна уу." });
-    } else if (!/^[A-Za-z-]+$/.test(form.lastname)) {
+    } else if (!/^[A-Za-z-]+$/.test(lastname)) {
       return setErrors({
         ...errors,
         lastnameError: "Овог нь тоо болон тэмдэгт агуулж болохгүй.",
       });
     } else setErrors({ ...errors, lastnameError: "" });
   };
-  const isUserNameValid = () => {
-    if (trimedUsername.trim() === "") {
+  const isUserNameValid = (username) => {
+    if (username.trim() === "") {
       return setErrors({
         ...errors,
         usernameError: "Хэрэглэгчийн нэрээ оруулна уу.",
       });
-    } else if (!/^[A-Za-z0-9]+$/.test(form.username)) {
+    } else if (!/^[A-Za-z0-9]+$/.test(username)) {
       return setErrors({
         ...errors,
         usernameError: "Хэрэглэгчийн нэр нь тэмдэгт агуулж болохгүй.",
       });
     } else setErrors({ ...errors, usernameError: "" });
-  };
-  const handleFirstNameBlur = () => {
-    isFirstNameValid();
-  };
-  const handleLastNameBlur = () => {
-    isLastNameValid();
-  };
-  const handleUserNameBlur = () => {
-    isUserNameValid();
   };
   const isHavingErrors = () => {
     let isValid = true;
@@ -70,21 +57,21 @@ export const StepOne = ({
       lastnameError: "",
       usernameError: "",
     };
-    if (trimedFirstname.trim() === "") {
+    if (form.firstname.trim() === "") {
       newErrors.firstnameError = "Нэрээ оруулна уу.";
       isValid = false;
     } else if (!/^[A-Za-z-]+$/.test(form.firstname)) {
       newErrors.firstnameError = "Нэр нь тоо болон тэмдэгт агуулж болохгүй.";
       isValid = false;
     }
-    if (trimedLastname.trim() === "") {
+    if (form.lastname.trim() === "") {
       newErrors.lastnameError = "Овгоо оруулна уу.";
       isValid = false;
     } else if (!/^[A-Za-z-]+$/.test(form.lastname)) {
       newErrors.lastnameError = "Овог нь тоо болон тэмдэгт агуулж болохгүй.";
       isValid = false;
     }
-    if (trimedUsername.trim() === "") {
+    if (form.username.trim() === "") {
       newErrors.usernameError = "Хэрэглэгчийн нэрээ оруулна уу.";
       isValid = false;
     } else if (!/^[A-Za-z0-9]+$/.test(form.username)) {
@@ -104,6 +91,7 @@ export const StepOne = ({
   //     handleNextStep();
   //   }
   // };
+
   return (
     <>
       <div className="w-120 min-h-163.75 bg-white p-8 flex rounded-lg flex-col gap-7">
@@ -113,11 +101,12 @@ export const StepOne = ({
             <Textfield
               value={form.firstname}
               onChange={(e) => {
-                setForm({ ...form, firstname: e.target.value });
-                isFirstNameValid(e.target.value);
+                const first = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, firstname: first });
+                isFirstNameValid(first);
               }}
+              onBlur={() => isFirstNameValid(form.firstname)}
               error={errors.firstnameError}
-              onBlur={handleFirstNameBlur}
               required={true}
               labelName="First name"
               placeholder="Your first name"
@@ -125,11 +114,12 @@ export const StepOne = ({
             <Textfield
               value={form.lastname}
               onChange={(e) => {
-                setForm({ ...form, lastname: e.target.value });
-                handleLastNameBlur();
+                const last = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, lastname: last });
+                isLastNameValid(last);
               }}
+              onBlur={() => isLastNameValid(form.lastname)}
               error={errors.lastnameError}
-              onBlur={handleLastNameBlur}
               required={true}
               labelName="Last name"
               placeholder="Your last name"
@@ -137,11 +127,12 @@ export const StepOne = ({
             <Textfield
               value={form.username}
               onChange={(e) => {
-                setForm({ ...form, username: e.target.value });
-                handleUserNameBlur();
+                const user = e.target.value.replace(/\s/g, "");
+                setForm({ ...form, username: user });
+                isUserNameValid(user);
               }}
+              onBlur={() => isUserNameValid(form.username)}
               error={errors.usernameError}
-              onBlur={handleUserNameBlur}
               required={true}
               labelName="Username"
               placeholder="Your username"

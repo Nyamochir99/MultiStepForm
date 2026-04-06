@@ -18,6 +18,7 @@ export const Imagefield = ({
         <input
           onChange={onChange}
           onBlur={onBlur}
+          onClick={(e) => (e.target.value = "")}
           type="file"
           className="absolute w-full h-full opacity-0 cursor-pointer"
           accept="image/*"

@@ -7,7 +7,7 @@ import { StepTwo } from "@/components/StepTwo";
 import { useState } from "react";
 
 export default function Home() {
-  const [currentStep, setCurrentstep] = useState(2);
+  const [currentStep, setCurrentstep] = useState(0);
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",

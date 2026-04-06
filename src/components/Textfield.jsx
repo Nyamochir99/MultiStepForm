@@ -23,7 +23,7 @@ export const Textfield = ({
         onChange={onChange}
         placeholder={placeholder}
       />
-      {error && <p className="text-[#E14942] text-[14px] ">{error}</p>}
+      {error && <pre className="text-[#E14942] text-[14px] ">{error}</pre>}
     </div>
   );
 };
