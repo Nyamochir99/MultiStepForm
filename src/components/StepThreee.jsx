@@ -82,48 +82,45 @@ export const StepThreee = ({
   };
   return (
     <>
-      <div className="w-120 min-h-163.75 bg-white p-8 flex rounded-lg flex-col gap-7">
-        <Header />
-        <div className="min-h-108.5 flex flex-col justify-between">
-          <div className="flex flex-col gap-3">
-            <Textfield
-              value={form.date}
-              onChange={(e) => {
-                setForm({ ...form, date: e.target.value });
-                isDateValid(e.target.value);
-              }}
-              type={"date"}
-              error={errors.dateError}
-              onBlur={() => isDateValid(form.date)}
-              required={true}
-              labelName="Date of birth"
-            />
-            <Imagefield
-              value={form.image}
-              onChange={(e) => {
-                const imageValue = URL.createObjectURL(e.target.files[0]);
-                setForm((prev) => ({ ...prev, image: imageValue }));
-                isImagevalid(e.target.files[0]);
-              }}
-              onCancel={() => {
-                setForm({ ...form, image: "" });
-                isImagevalid(form.image);
-              }}
-              onBlur={() => isImagevalid(form.image)}
-              error={errors.imageError}
-              required={true}
-              labelName="Profile image"
-            />
-          </div>
-          <Button
-            handleNextStep={() => {
-              isHavingErrors();
-              handleReset();
+      <div className="min-h-108.5 flex flex-col justify-between">
+        <div className="flex flex-col gap-3">
+          <Textfield
+            value={form.date}
+            onChange={(e) => {
+              setForm({ ...form, date: e.target.value });
+              isDateValid(e.target.value);
             }}
-            handlePrevStep={handlePrevStep}
-            currentStep={currentStep}
+            type={"date"}
+            error={errors.dateError}
+            onBlur={() => isDateValid(form.date)}
+            required={true}
+            labelName="Date of birth"
+          />
+          <Imagefield
+            value={form.image}
+            onChange={(e) => {
+              const imageValue = URL.createObjectURL(e.target.files[0]);
+              setForm((prev) => ({ ...prev, image: imageValue }));
+              isImagevalid(e.target.files[0]);
+            }}
+            onCancel={() => {
+              setForm({ ...form, image: "" });
+              isImagevalid(form.image);
+            }}
+            onBlur={() => isImagevalid(form.image)}
+            error={errors.imageError}
+            required={true}
+            labelName="Profile image"
           />
         </div>
+        <Button
+          handleNextStep={() => {
+            isHavingErrors();
+            handleReset();
+          }}
+          handlePrevStep={handlePrevStep}
+          currentStep={currentStep}
+        />
       </div>
     </>
   );

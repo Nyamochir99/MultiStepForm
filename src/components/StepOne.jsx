@@ -94,56 +94,53 @@ export const StepOne = ({
 
   return (
     <>
-      <div className="w-120 min-h-163.75 bg-white p-8 flex rounded-lg flex-col gap-7">
-        <Header />
-        <div className="min-h-108.5 flex flex-col justify-between">
-          <div className="flex flex-col gap-3">
-            <Textfield
-              value={form.firstname}
-              onChange={(e) => {
-                const first = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, firstname: first });
-                isFirstNameValid(first);
-              }}
-              onBlur={() => isFirstNameValid(form.firstname)}
-              error={errors.firstnameError}
-              required={true}
-              labelName="First name"
-              placeholder="Your first name"
-            />
-            <Textfield
-              value={form.lastname}
-              onChange={(e) => {
-                const last = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, lastname: last });
-                isLastNameValid(last);
-              }}
-              onBlur={() => isLastNameValid(form.lastname)}
-              error={errors.lastnameError}
-              required={true}
-              labelName="Last name"
-              placeholder="Your last name"
-            />
-            <Textfield
-              value={form.username}
-              onChange={(e) => {
-                const user = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, username: user });
-                isUserNameValid(user);
-              }}
-              onBlur={() => isUserNameValid(form.username)}
-              error={errors.usernameError}
-              required={true}
-              labelName="Username"
-              placeholder="Your username"
-            />
-          </div>
-          <Button
-            handleNextStep={isHavingErrors}
-            handlePrevStep={handlePrevStep}
-            currentStep={currentStep}
+      <div className="min-h-108.5 flex flex-col justify-between">
+        <div className="flex flex-col gap-3">
+          <Textfield
+            value={form.firstname}
+            onChange={(e) => {
+              const first = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, firstname: first });
+              isFirstNameValid(first);
+            }}
+            onBlur={() => isFirstNameValid(form.firstname)}
+            error={errors.firstnameError}
+            required={true}
+            labelName="First name"
+            placeholder="Your first name"
+          />
+          <Textfield
+            value={form.lastname}
+            onChange={(e) => {
+              const last = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, lastname: last });
+              isLastNameValid(last);
+            }}
+            onBlur={() => isLastNameValid(form.lastname)}
+            error={errors.lastnameError}
+            required={true}
+            labelName="Last name"
+            placeholder="Your last name"
+          />
+          <Textfield
+            value={form.username}
+            onChange={(e) => {
+              const user = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, username: user });
+              isUserNameValid(user);
+            }}
+            onBlur={() => isUserNameValid(form.username)}
+            error={errors.usernameError}
+            required={true}
+            labelName="Username"
+            placeholder="Your username"
           />
         </div>
+        <Button
+          handleNextStep={isHavingErrors}
+          handlePrevStep={handlePrevStep}
+          currentStep={currentStep}
+        />
       </div>
     </>
   );

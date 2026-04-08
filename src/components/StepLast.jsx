@@ -3,7 +3,7 @@ import { Logo } from "./Logo";
 
 export const StepLast = () => {
   return (
-    <div className="w-120 bg-white p-8 flex rounded-lg">
+    <div className="w-120 bg-white p-8 flex rounded-lg shadow-xl">
       <div className="h-35.5 flex flex-col gap-2 ">
         <Logo />
         <div className="text-[26px] text-[#202124] font-semibold">
