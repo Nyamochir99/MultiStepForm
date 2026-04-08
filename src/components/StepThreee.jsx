@@ -17,12 +17,25 @@ export const StepThreee = ({
     dateError: "",
     imageError: "",
   });
-  const trimedDate = form.date;
 
-  const isDateValid = () => {
-    if (trimedDate.trim() === "") {
+  const handleReset = () => {
+    setForm({
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      number: "",
+      password: "",
+      confirmPassword: "",
+      date: "",
+      image: "",
+    });
+  };
+
+  const isDateValid = (date) => {
+    if (date.trim() === "") {
       return setErrors({ ...errors, dateError: "Төрсөн өдрөө оруулна уу." });
-    }
+    } else setErrors({ ...errors, dateError: "" });
     // const birthDate = new Date(form.date);
     // const today = new Date();
     // let age = today.getFullYear() - birthDate.getFullYear();
@@ -38,8 +51,8 @@ export const StepThreee = ({
     //   setErrors({ ...errors, dateError: "" });
     // }
   };
-  const isImagevalid = () => {
-    if (form.image === "") {
+  const isImagevalid = (image) => {
+    if (image === "") {
       return setErrors({
         ...errors,
         imageError: "Профайл зурагаа оруулна уу.",
@@ -54,7 +67,7 @@ export const StepThreee = ({
       dateError: "",
       imageError: "",
     };
-    if (trimedDate.trim() === "") {
+    if (form.date.trim() === "") {
       newErrors.dateError = "Төрсөн өдрөө оруулна уу.";
       isValid = false;
     }
@@ -103,7 +116,10 @@ export const StepThreee = ({
             />
           </div>
           <Button
-            handleNextStep={isHavingErrors}
+            handleNextStep={() => {
+              isHavingErrors();
+              handleReset();
+            }}
             handlePrevStep={handlePrevStep}
             currentStep={currentStep}
           />

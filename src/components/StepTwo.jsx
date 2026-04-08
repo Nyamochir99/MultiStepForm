@@ -5,6 +5,7 @@ import { Textfield } from "@/components/Textfield";
 import { useState } from "react";
 import { Button } from "./Button";
 import { Header } from "./Header";
+import { PasswordField } from "./PasswordField";
 
 export const StepTwo = ({
   handleNextStep,
@@ -80,7 +81,7 @@ export const StepTwo = ({
         ...errors,
         confirmPasswordError: "Нууц үг таарахгүй байна.",
       });
-    } else setErrors({ ...errors, emailError: "" });
+    } else setErrors({ ...errors, confirmPasswordError: "" });
   };
   const isHavingErrors = () => {
     let isValid = true;
@@ -167,7 +168,7 @@ export const StepTwo = ({
               labelName="Phone number"
               placeholder="Your phone number"
             />
-            <Textfield
+            <PasswordField
               value={form.password}
               onChange={(e) => {
                 const pass = e.target.value.replace(/\s/g, "");
@@ -181,7 +182,7 @@ export const StepTwo = ({
               labelName="Password"
               placeholder="Your password"
             />
-            <Textfield
+            <PasswordField
               value={form.confirmPassword}
               onChange={(e) => {
                 const confirmPass = e.target.value.replace(/\s/g, "");
