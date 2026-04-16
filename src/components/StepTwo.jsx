@@ -136,73 +136,70 @@ export const StepTwo = ({
   };
   return (
     <>
-      <div className="w-120 min-h-163.75 bg-white p-8 flex rounded-lg flex-col gap-7">
-        <Header />
-        <div className="min-h-108.5 flex flex-col justify-between">
-          <div className="flex flex-col gap-3">
-            <Textfield
-              value={form.email}
-              onChange={(e) => {
-                const mail = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, email: mail });
-                isEmailValid(mail);
-              }}
-              type={"text"}
-              error={errors.emailError}
-              onBlur={() => isEmailValid(form.email)}
-              required={true}
-              labelName="Email"
-              placeholder="Your email"
-            />
-            <Textfield
-              value={form.number}
-              onChange={(e) => {
-                const num = e.target.value.replace(/\D/g, "");
-                setForm({ ...form, number: num });
-                isNumberValid(num);
-              }}
-              type={"text"}
-              error={errors.numberError}
-              onBlur={() => isNumberValid(form.number)}
-              required={true}
-              labelName="Phone number"
-              placeholder="Your phone number"
-            />
-            <PasswordField
-              value={form.password}
-              onChange={(e) => {
-                const pass = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, password: pass });
-                isPasswordValid(pass);
-              }}
-              type={"password"}
-              error={errors.passwordError}
-              onBlur={() => isPasswordValid(form.password)}
-              required={true}
-              labelName="Password"
-              placeholder="Your password"
-            />
-            <PasswordField
-              value={form.confirmPassword}
-              onChange={(e) => {
-                const confirmPass = e.target.value.replace(/\s/g, "");
-                setForm({ ...form, confirmPassword: confirmPass });
-                isConfirmPasswordValid(confirmPass);
-              }}
-              type={"password"}
-              error={errors.confirmPasswordError}
-              onBlur={() => isConfirmPasswordValid(form.confirmPassword)}
-              required={true}
-              labelName="Confirm password"
-              placeholder="Confirm password"
-            />
-          </div>
-          <Button
-            handleNextStep={isHavingErrors}
-            handlePrevStep={handlePrevStep}
-            currentStep={currentStep}
+      <div className="min-h-108.5 flex flex-col justify-between">
+        <div className="flex flex-col gap-3">
+          <Textfield
+            value={form.email}
+            onChange={(e) => {
+              const mail = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, email: mail });
+              isEmailValid(mail);
+            }}
+            type={"text"}
+            error={errors.emailError}
+            onBlur={() => isEmailValid(form.email)}
+            required={true}
+            labelName="Email"
+            placeholder="Your email"
+          />
+          <Textfield
+            value={form.number}
+            onChange={(e) => {
+              const num = e.target.value.replace(/\D/g, "");
+              setForm({ ...form, number: num });
+              isNumberValid(num);
+            }}
+            type={"text"}
+            error={errors.numberError}
+            onBlur={() => isNumberValid(form.number)}
+            required={true}
+            labelName="Phone number"
+            placeholder="Your phone number"
+          />
+          <PasswordField
+            value={form.password}
+            onChange={(e) => {
+              const pass = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, password: pass });
+              isPasswordValid(pass);
+            }}
+            type={"password"}
+            error={errors.passwordError}
+            onBlur={() => isPasswordValid(form.password)}
+            required={true}
+            labelName="Password"
+            placeholder="Your password"
+          />
+          <PasswordField
+            value={form.confirmPassword}
+            onChange={(e) => {
+              const confirmPass = e.target.value.replace(/\s/g, "");
+              setForm({ ...form, confirmPassword: confirmPass });
+              isConfirmPasswordValid(confirmPass);
+            }}
+            type={"password"}
+            error={errors.confirmPasswordError}
+            onBlur={() => isConfirmPasswordValid(form.confirmPassword)}
+            required={true}
+            labelName="Confirm password"
+            placeholder="Confirm password"
           />
         </div>
+        <Button
+          handleNextStep={isHavingErrors}
+          handlePrevStep={handlePrevStep}
+          currentStep={currentStep}
+        />
       </div>
     </>
   );
